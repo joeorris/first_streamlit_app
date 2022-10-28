@@ -8,7 +8,7 @@ my_fruit_list = my_fruit_list.set_index('Fruit')
 
 streamlit.title('My First Streamlit App')
 streamlit.header('Breakfast Favourites')
-streamlit.text('🥣  Omega 3 & Blueberry Oatmeal')
+streamlit.text('🥣 Omega 3 & Blueberry Oatmeal')
 streamlit.text('🥗 Kale, Spinach & Rocket Smoothie')
 streamlit.text('🐔 Hard-Boiled Free-Range Egg')
 streamlit.text('🥑🍞 Avocado on Toast')
@@ -29,3 +29,10 @@ fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+fruit_cho
 fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
 # put it into a dataframe
 streamlit.dataframe(fruityvice_normalized)
+
+my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+my_cur = my_cnx.cursor()
+my_cur.execute("SELECT CURRENT_USER(), CURRENT_ACCOUNT(), CURRENT_REGION()")
+my_data_row = my_cur.fetchone()
+streamlit.text("Hello from Snowflake:")
+streamlit.text(my_data_row)
