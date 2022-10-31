@@ -1,4 +1,4 @@
-streamlit.stop()
+#streamlit.stop()
 
 import streamlit
 import pandas
