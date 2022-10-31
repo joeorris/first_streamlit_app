@@ -47,5 +47,5 @@ my_fruit_data_frame = my_fruit_data_frame.append(new_fruit_df)
 streamlit.write('Thank you for adding ', add_fruit)
 
 #test adding test_value
-my_cur.execute("INSERT INTO fruit_load_list values 'test_value'")
+my_cur.execute("INSERT INTO fruit_load_list values ('test_value')")
 
