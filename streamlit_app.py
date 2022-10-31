@@ -64,10 +64,5 @@ if streamlit.button('Add Fruit to Load List'):
   
 #streamlit.stop()
 
-#my_cur.execute("INSERT INTO fruit_load_list VALUES ('%s')", (add_fruit))
-new_fruit_df = pandas.DataFrame([add_fruit])
-my_fruit_data_frame = my_fruit_data_frame.append(new_fruit_df)
-streamlit.write('Thank you for adding ', add_fruit)
-
 
 
