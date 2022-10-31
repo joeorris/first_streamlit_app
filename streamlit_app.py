@@ -13,6 +13,12 @@ def get_fruit_load_list():
     with my_cnx.cursor() as my_cur:
         my_cur.execute("SELECT * FROM fruit_load_list")
         return my_cur.fetchall()
+    
+def insert_into_fruit_load_list(new_fruit):
+    with my_cnx.cursor() as my_cur:
+        my_cur.execute("INSERT INTO fruit_load_list values ('test_value')")
+        return "Thanks for adding " + new_fruit
+    
 
 my_fruit_list = pandas.read_csv("https://uni-lab-files.s3.us-west-2.amazonaws.com/dabw/fruit_macros.txt")
 my_fruit_list = my_fruit_list.set_index('Fruit')
@@ -41,8 +47,6 @@ try:
     streamlit.dataframe(back_from_function)
 except URLError as e:
   streamlit.error()
-  
-#streamlit.stop()
 
 streamlit.header("The fruit load list contains:")
 #add a button to load fruit load list
@@ -52,11 +56,18 @@ if streamlit.button('Get Fruit Load List'):
     streamlit.dataframe(my_data_rows)
     
 add_fruit = streamlit.text_input('What fruit would you like to add?','Jackfruit')
+#add a button to add a fruit to the list
+if streamlit.button('Add Fruit to Load List'):
+    my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+    back_from_function = insert_into_fruit_load_list(add_fruit)
+    streamlit.text(back_from_function)
+  
+#streamlit.stop()
+
 #my_cur.execute("INSERT INTO fruit_load_list VALUES ('%s')", (add_fruit))
 new_fruit_df = pandas.DataFrame([add_fruit])
 my_fruit_data_frame = my_fruit_data_frame.append(new_fruit_df)
 streamlit.write('Thank you for adding ', add_fruit)
 
-#test adding test_value
-my_cur.execute("INSERT INTO fruit_load_list values ('test_value')")
+
 
